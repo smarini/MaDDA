@@ -3,12 +3,12 @@
  Code by		**Simone Marini**,
  			**Francesca Vitali**,
  			**Andrea Demartini**,
-    and
-    **Daniele Pala**.
+    			and
+			**Daniele Pala**.
 
  This file is part of "Matrix trifactorization for discovery of data similarity and association".
 
- "Matrix trifactorization for discovery of data similarity and association" is free software: you
+ Matrix trifactorization for discovery of data similarity and association" is free software: you
  can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or

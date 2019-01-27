@@ -45,8 +45,9 @@ for i=1:length(R_tmp)
     dim_g_col(i)=nnz(R(:,cs(i)+1:cs(i+1)));
 end
 
-dim_g=[100, 100, 100]
-%dim_g=min(dim_g,dim);
+% dim_g=[3, 5, 4] % this line is an example of fixing a priori the # of columuns in the G matrix to 3, 5, and 4 in an application with 3 data types.
+dim_g=round(((dim_g_row+dim_g_col)/2)./lambda);
+dim_g=min(dim_g,dim);
 
 R_targ=R(cs(rTarg)+1:cs(rTarg+1),cs(cTarg)+1:cs(cTarg+1));
 
@@ -98,11 +99,9 @@ parfor rep=1:num_rep
         
         % checks every 10 iterations
         if flag==1
-            tol=1e-2;
-            if norm_new-norm_old > tol %norm_new > norm_old
-                %disp('Diverging...')
+            norm_new > norm_old
+                disp('Apprently diverging...')
                 disp(['rep=' num2str(rep) '  num_iter=' num2str(iter) '   norm_new=' num2str(norm_new)])
-
             end
             
             disp(['rep=' num2str(rep) '  num_iter=' num2str(iter) '   norm_new=' num2str(norm_new)])
@@ -117,7 +116,7 @@ parfor rep=1:num_rep
             G_old=G;
         end
         
-        % save the process every 100 iterations
+        % saves the process every 100 iterations
         if mod(iter,100)==0
             parsave([ 'dump' num2str(rep) '.mat'],{'iter','tp','tn','G','ranks','G_old','S','S_old','csr','norm_new','norm_old'},iter,tp,tn,G,ranks,G_old,S,S_old,csr,norm_new,norm_old);
         end
