@@ -1,5 +1,5 @@
-% Copyright 2017
-% Code by		Simone Marini,
+% Copyright 2019
+% Code by	Simone Marini,
 % 			Francesca Vitali,
 % 			Andrea Demartini,
 % 			Daniele Pala
@@ -46,7 +46,8 @@ for i=1:length(R_tmp)
 end
 
 % dim_g=[3, 5, 4] % this line is an example of fixing a priori the # of columuns in the G matrix to 3, 5, and 4 in an application with 3 data types.
-dim_g=round(((dim_g_row+dim_g_col)/2)./lambda);
+
+dim_g=round(((dim_g_row+dim_g_col)/2)/lambda);
 dim_g=min(dim_g,dim);
 
 R_targ=R(cs(rTarg)+1:cs(rTarg+1),cs(cTarg)+1:cs(cTarg+1));
@@ -99,9 +100,11 @@ parfor rep=1:num_rep
         
         % checks every 10 iterations
         if flag==1
-            norm_new > norm_old
-                disp('Apprently diverging...')
+            
+            if norm_new-norm_old > 10e-2 %norm_new > norm_old
+                disp('Warning: new norm more than 1% larger than old norm.')
                 disp(['rep=' num2str(rep) '  num_iter=' num2str(iter) '   norm_new=' num2str(norm_new)])
+
             end
             
             disp(['rep=' num2str(rep) '  num_iter=' num2str(iter) '   norm_new=' num2str(norm_new)])
@@ -258,4 +261,3 @@ else
 end
 
 disp('Finished.')
-
